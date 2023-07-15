@@ -22,8 +22,8 @@ namespace FizzBuzz2MVC.Controllers
         [HttpGet]
         public IActionResult FBPage()
         {
-           /*Calling FizzBuzz here is called instansiation.
-            Youre accessing the FizzBuzz class from the Model and creating a copy of it*/
+            /*Calling FizzBuzz here is called instansiation.
+             Youre accessing the FizzBuzz class from the Model and creating a copy of it*/
             FizzBuzz model = new();
 
             model.FizzValue = 3;
@@ -36,8 +36,34 @@ namespace FizzBuzz2MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult FBPage(FizzBuzz fizzbuzz)
         {
+            List<string> fbItems = new();
 
+            bool fizz;
+            bool buzz;
 
+            for (int i = 1; i <= 100; i++)
+            {
+                fizz = (i % fizzbuzz.FizzValue == 0);
+                buzz = (i % fizzbuzz.BuzzValue == 0);
+
+                if (fizz == true && buzz == true)
+                {
+                    fbItems.Add("FizzBuzz");
+                }
+                else if (fizz == true)
+                {
+                    fbItems.Add("Fizz");
+                }
+                else if (buzz == true)
+                {
+                    fbItems.Add("Buzz");
+                }
+                else
+                {
+                    fbItems.Add(i.ToString());
+                }
+            }
+            fizzbuzz.Result = fbItems;
 
             return View(fizzbuzz);
         }
